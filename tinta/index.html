@@ -1,0 +1,110 @@
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<img id='myImageOriginal2' src='maglione-a-righe-viola-e-beige-2.png'/>
+<img id='myImageOriginal' src='maglione-a-righe-viola-e-beige-1.png' />
+<br />
+R<input id="r" name="r" type="range" onchange="callback();" min="0" max="100" />
+G<input id="g" name="g" type="range" onchange="callback();" min="0" max="100" />
+B<input id="b" name="b" type="range" onchange="callback();" min="0" max="100" />
+<br />
+R2<input id="r2" name="r2" type="range" onchange="callback2();" min="0" max="100" />
+G2<input id="g2" name="g2" type="range" onchange="callback2();" min="0" max="100" />
+B2<input id="b2" name="b2" type="range" onchange="callback2();" min="0" max="100" />
+<br />
+<div style="position: relative;"></div>
+    <img src='maglione-a-righe-viola-e-beige.jpg' style="position:absolute; left:0; z-index:10;"/>
+    <img id='myImageOverlay' src='maglione-a-righe-viola-e-beige.jpg' style="position:absolute; left:0;z-index:20;"/>
+    <img id='myImageOverlay2' src='maglione-a-righe-viola-e-beige.jpg' style="position:absolute; left:0;z-index:10;"/>
+</div>
+<script>
+
+function decimalToHex(d, padding) {
+    var hex = Number(parseInt(d)).toString(16);
+    padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+
+    while (hex.length < padding) {
+        hex = "0" + hex;
+    }
+
+    return hex;
+}
+
+function tintImage(imgElement, originalImgElement, tintColor) {
+    // create hidden canvas (using image dimensions)
+    var canvas = document.createElement("canvas");
+    canvas.width = imgElement.offsetWidth;
+    canvas.height = imgElement.offsetHeight;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(originalImgElement,0,0);
+
+    var map = ctx.getImageData(0,0,originalImgElement.width,originalImgElement.height);
+    var imdata = map.data;
+
+    // convert image to grayscale
+    var r,g,b,alpha,avg;
+    for(var p = 0, len = imdata.length; p < len; p+=4) {
+        r = imdata[p]
+        g = imdata[p+1];
+        b = imdata[p+2];
+        // alpha channel (p+3) is ignored
+
+        avg = Math.floor((r+g+b)/3);
+
+        imdata[p] = imdata[p+1] = imdata[p+2] = avg;
+    }
+
+    ctx.putImageData(map,0,0);
+
+    // overlay filled rectangle using lighter composition
+    ctx.globalCompositeOperation = "lighter";
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle=tintColor;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    var map2 = ctx.getImageData(0,0,originalImgElement.width,originalImgElement.height);
+    var imdata2 = map2.data;
+    for(var p = 0, len = imdata.length; p < len; p+=4) {
+        imdata2[p+3] = imdata[p+3];
+    }
+    ctx.putImageData(map2,0,0);
+
+    // replace image source with canvas data
+    imgElement.src = canvas.toDataURL();
+}
+
+function callback() {
+    var r = $('#r').val() * 2.55 ,g= $('#g').val()* 2.55,b= $('#b').val()* 2.55;
+    console.debug([r,g,b]);
+    console.debug([ decimalToHex(r) , decimalToHex(g) , decimalToHex(b) ]);
+
+    tintImage(
+        document.getElementById('myImageOverlay'),
+        document.getElementById('myImageOriginal'),
+        "#" + decimalToHex(r) + decimalToHex(g) + decimalToHex(b)
+    );
+}
+
+function callback2() {
+    var r = $('#r2').val() * 2.55 ,g= $('#g2').val()* 2.55,b= $('#b2').val()* 2.55;
+    console.debug([r,g,b]);
+    console.debug([ decimalToHex(r) , decimalToHex(g) , decimalToHex(b) ]);
+
+    tintImage(
+        document.getElementById('myImageOverlay2'),
+        document.getElementById('myImageOriginal2'),
+        "#" + decimalToHex(r) + decimalToHex(g) + decimalToHex(b)
+    );
+}
+
+
+$(function () {
+    callback();
+    callback2();
+});
+</script>
+</body>
+</html>
