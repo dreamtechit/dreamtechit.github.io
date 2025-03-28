@@ -1,70 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dreamtech.it - Innovative Software Solutions</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>DreamTech.it - Innovative Software Solutions</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #ff7bac 0%, #bf5dff 50%, #37f2ff 100%);
+            --dark-bg: #1c2237;
+            --darker-bg: #141929;
+            --text-light: #ffffff;
+            --text-muted: #b8c3e6;
+            --glow-shadow: 0 0 15px rgba(191, 93, 255, 0.3);
+            --card-bg: rgba(36, 43, 66, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(91, 33, 182, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.1) 0%, transparent 30%);
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0.6;
+            animation: twinkle 4s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(0.8); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #37f2ff;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--primary-gradient);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-title span {
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-text {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: var(--glow-shadow);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(191, 93, 255, 0.5);
+        }
+        
+        .hero-image {
+            width: 40%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .about {
+            padding: 100px 0;
+            background-color: var(--darker-bg);
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-gradient);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .about-image img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+        
+        .services {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--glow-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(191, 93, 255, 0.4);
+        }
+        
+        .service-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            background: var(--primary-gradient);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+        }
+        
+        .service-icon img {
+            width: 50px;
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .service-content {
+            padding: 30px;
+        }
+        
+        .service-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .service-text {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+        
+        .footer {
+            background-color: var(--darker-bg);
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .footer-content {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .footer-logo {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nav {
+                margin-top: 20px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .hero {
+                flex-direction: column;
+                padding: 40px 0;
+            }
+            
+            .hero-content {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            
+            .hero-image {
+                width: 80%;
+            }
+            
+            .about-content {
+                flex-direction: column-reverse;
+            }
+            
+            .about-image {
+                margin-bottom: 30px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#services">Our Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+    <!-- Sparkles -->
+    <div class="sparkle" style="top: 10%; left: 15%;"></div>
+    <div class="sparkle" style="top: 15%; left: 85%;"></div>
+    <div class="sparkle" style="top: 45%; left: 92%;"></div>
+    <div class="sparkle" style="top: 60%; left: 5%;"></div>
+    <div class="sparkle" style="top: 75%; left: 88%;"></div>
+    <div class="sparkle" style="top: 82%; left: 20%;"></div>
+    
+    <!-- Header -->
+    <header class="header container">
+        <div class="logo-container">
+            <img src="dreamtech-logo.svg" alt="DreamTech Logo" class="logo">
+            <div class="logo-text">DreamTech.it</div>
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#contact" class="nav-link">Contact</a>
         </nav>
     </header>
-    <main>
-        <section id="hero">
-            <h1>Welcome to Dreamtech.it</h1>
-            <p>
-                At Dreamtech, we specialize in providing cutting-edge software solutions that empower businesses
-                to achieve their goals. Our team of skilled developers and consultants combines expertise with
-                innovation to deliver tailor-made software designed to meet your unique needs. Whether you're
-                a startup, a growing company, or a large enterprise, we're here to help turn your ideas into
-                reality.
-            </p>
-        </section>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>
-                Dreamtech.it has been at the forefront of the software development industry for nearly two decades.
-                With a commitment to quality, precision, and innovation, we have established long-term partnerships
-                with clients across the globe. Our approach is rooted in understanding our clients' unique challenges
-                and crafting solutions that deliver measurable results.
-            </p>
-            <p>
-                From advanced software engineering to comprehensive consulting services, our mission is to simplify
-                complexity and create solutions that drive success.
-            </p>
-        </section>
-        <section id="services">
-            <h2>Our Services</h2>
-            <div class="service">
-                <h3>Custom Software Development</h3>
-                <p>
-                    We design and develop bespoke software tailored to your business requirements. Whether it's a
-                    standalone application or a complex, distributed system, our expertise in modern technologies
-                    such as Python and Rust ensures a reliable and efficient product.
-                </p>
+    
+    <!-- Hero Section -->
+    <section class="hero container">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to <span>DreamTech.it</span></h1>
+            <p class="hero-text">At DreamTech, we specialize in providing cutting-edge software solutions that empower businesses to achieve their goals. Our team of skilled developers and consultants combines expertise with innovation to deliver tailor-made software designed to meet your unique needs. Whether you're a startup, a growing company, or a large enterprise, we're here to help turn your ideas into reality.</p>
+        </div>
+        <div class="hero-image">
+            <img src="dreamtech-hero.svg" alt="DreamTech Innovation Illustration">
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Dreamtech.it has been at the forefront of the software development industry for nearly two decades. With a commitment to quality, precision, and innovation, we have established long-term partnerships with clients across the globe. Our approach is rooted in understanding our clients' unique challenges and crafting solutions that deliver measurable results.</p>
+                    <p>From advanced software engineering to comprehensive consulting services, our mission is to simplify complexity and create solutions that drive success.</p>
+                </div>
+                <div class="about-image">
+                    <img src="dreamtech-circuit.svg" alt="Circuit Network Illustration">
+                </div>
             </div>
-            <div class="service">
-                <h3>Consulting and Strategy</h3>
-                <p>
-                    Our consulting services are aimed at providing strategic insights and technical guidance to help
-                    your business navigate the challenges of software development. We work closely with your team to
-                    ensure smooth project execution and optimal outcomes.
-                </p>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="code-icon.svg" alt="Code Icon">
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Custom Software Development</h3>
+                        <p class="service-text">We design and develop bespoke software tailored to your business requirements. Whether it's a standalone application or a complex, distributed system, our expertise in modern technologies such as Python and Rust ensures a reliable and efficient product.</p>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <img src="consulting-icon.svg" alt="Consulting Icon">
+                    </div>
+                    <div class="service-content">
+                        <h3 class="service-title">Consulting and Strategy</h3>
+                        <p class="service-text">Our consulting services are aimed at providing strategic insights and technical guidance to help your business navigate the challenges of software development. We work closely with your team to ensure smooth project execution and optimal outcomes.</p>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Dreamtech.it | Innovating the Future of Software</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <img src="dreamtech-logo-small.svg" alt="DreamTech Logo" width="40">
+            </div>
+            <div class="footer-content">
+                © 2024 Dreamtech.it | Innovating the Future of Software
+            </div>
+        </div>
     </footer>
 </body>
-
 </html>
